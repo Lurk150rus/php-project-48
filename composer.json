@@ -17,5 +17,8 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "^4.0",
         "phpstan/phpstan": "^2.1"
+    },
+    "require": {
+        "docopt/docopt": "^1.0"
     }
 }

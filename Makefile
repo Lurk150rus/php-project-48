@@ -8,6 +8,9 @@ validate:
 autoload:
 	composer dump-autoload
 
+gendiff:
+	./bin/gendiff
+
 lint:
 	composer exec --verbose phpcs -- src src bin
 	composer exec --verbose phpstan
