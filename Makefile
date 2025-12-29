@@ -9,7 +9,10 @@ autoload:
 	composer dump-autoload
 
 gendiff:
-	./bin/gendiff
+	./bin/gendiff $(filter-out $@,$(MAKECMDGOALS))
+
+test:
+	./bin/gendiff /home/kirill/Documents/Hexlet/php-project-48/examples/file1.json examples/file2.json
 
 lint:
 	composer exec --verbose phpcs -- src src bin
