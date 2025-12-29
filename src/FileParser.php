@@ -24,11 +24,16 @@ final class FileParser
 
     private function parse(): void
     {
-        $this->parsed_data = json_decode($this->file_content);
+        $this->parsed_data = json_decode($this->file_content, true) ?? [];
     }
 
     public function print(): void
     {
         print_r($this->parsed_data);
+    }
+
+    public function getParsedData(): array
+    {
+        return $this->parsed_data;
     }
 }

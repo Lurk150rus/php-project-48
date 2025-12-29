@@ -4,17 +4,22 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Hexlet\Code\FileDiffer;
 use Hexlet\Code\FileParser;
 
 $first_file_path = $argv[1] ?? null;
 $second_file_path = $argv[2] ?? null;
 
-foreach(array_filter( [$first_file_path, $second_file_path] ) as $path) {
-    $parsedFile = new FileParser($path);
-    $parsedFile->print();
-}
+$files = array_filter([$first_file_path, $second_file_path]);
+if (count($files) === 2) {
+    $first_file_data = (new FileParser($first_file_path))->getParsedData();
+    $second_file_data = (new FileParser($second_file_path))->getParsedData();
 
-$doc = <<<DOC
+    $diff_data = (new FileDiffer($first_file_data, $second_file_data))->getResultDiff();
+
+    print_r(json_encode($diff_data));
+} else {
+    $doc = <<<DOC
 Generate diff
 
 Usage:
@@ -27,7 +32,10 @@ Options:
 
 DOC;
 
-$args = Docopt::handle($doc, array('version' => 'Gendiff 0.1a'));
-foreach ($args as $k => $v)
-    echo $k . ': ' . json_encode($v) . PHP_EOL;
+    $args = Docopt::handle($doc, array('version' => 'Gendiff 0.1a'));
+    foreach ($args as $k => $v)
+        echo $k . ': ' . json_encode($v) . PHP_EOL;
+}
+
+
 ?>
