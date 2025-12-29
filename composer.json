@@ -1,0 +1,21 @@
+{
+    "name": "hexlet/code",
+    "description": "Учебный проект \"Вычислитель отношений\" от Hexlet",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sasyk Kirill Vasilevich",
+            "email": "sasyk@ya.me"
+        }
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^4.0",
+        "phpstan/phpstan": "^2.1"
+    }
+}
