@@ -11,8 +11,8 @@ autoload:
 gendiff:
 	./bin/gendiff $(filter-out $@,$(MAKECMDGOALS))
 
-test:
-	./bin/gendiff /home/kirill/Documents/Hexlet/php-project-48/examples/file1.json examples/file2.json
+# test:
+# 	./bin/gendiff /home/kirill/Documents/Hexlet/php-project-48/examples/file1.json examples/file2.json
 
 lint:
 	composer exec --verbose phpcs -- src src bin
@@ -23,3 +23,12 @@ lint-fix:
 
 stan-lint:
 	composer exec -v phpstan analyse -- -c phpstan.neon --ansi src bin
+
+test:
+	composer exec --verbose phpunit tests
+
+test-coverage:
+	XDEBUG_MODE=coverage composer exec --verbose phpunit tests -- --coverage-clover=build/logs/clover.xml
+
+test-coverage-text:
+	XDEBUG_MODE=coverage composer exec --verbose phpunit tests -- --coverage-text

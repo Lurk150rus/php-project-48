@@ -11,15 +11,21 @@
             "src/genDiff.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Hexlet\\Code\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Sasyk Kirill Vasilevich",
-            "email": "sasyk@ya.me"
+            "email": "unknownsomebody@ya.me"
         }
     ],
     "require-dev": {
         "squizlabs/php_codesniffer": "^4.0",
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^12.5"
     },
     "require": {
         "docopt/docopt": "^1.0",
