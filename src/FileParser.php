@@ -13,7 +13,6 @@ final class FileParser
     /**
      * Путь к файлу
      * @var string
-     *
      */
     private string $path;
     /**
@@ -48,7 +47,7 @@ final class FileParser
         if (!file_exists($this->path)) {
             throw new \Exception("File not found");
         }
-        $this->file_content = file_get_contents($this->path);
+        $this->file_content = (string) file_get_contents($this->path);
     }
 
     /**

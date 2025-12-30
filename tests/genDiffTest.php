@@ -12,13 +12,25 @@ use function Hexlet\Code\genDiff;
 
 final class genDiffTest extends TestCase
 {
-    private $dirpath;
+    /**
+     * Summary of dirpath
+     * @var string
+     */
+    private string $dirpath;
 
+    /**
+     * Summary of setUp
+     * @return void
+     */
     public function setUp(): void
     {
         $this->dirpath = __DIR__ . '/fixtures/';
     }
 
+    /**
+     * Summary of testCorrect
+     * @return void
+     */
     public function testCorrect(): void
     {
         $correctDiff = array(
@@ -38,19 +50,25 @@ final class genDiffTest extends TestCase
         $this->assertEquals($diff_data, $correctDiff);
     }
 
+    
+    /**
+     * Summary of testIncorrectFiles
+     * @param array $files
+     * @return void
+    */
     #[DataProvider('incorrectFilesDataProvider')]
-    public function testIncorrectFiles(...$files): void
+    public function testIncorrectFiles($files): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Invalid number of files');
-        genDiff(...$files);
+        genDiff($files[0], $files[1]);
     }
 
     public static function incorrectFilesDataProvider(): array
     {
         return [
-            'empty file' => ['', ''],
-            'only spaces' => ['   ', '   '],
+            'empty file' => [ ['', ''] ],
+            'only spaces' => [ ['   ', '   '] ],
         ];
     }
 }

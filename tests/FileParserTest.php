@@ -9,10 +9,27 @@ use PHPUnit\Framework\TestCase;
 
 final class FileParserTest extends TestCase
 {
-    private $firstArray;
-    private $secondArray;
+    /**
+     * Summary of firstArray
+     * @var array
+     */
+    private array $firstArray;
+    /**
+     * Summary of secondArray
+     * @var array
+     */
+    private array $secondArray;
 
-    private $dirpath;
+    /**
+     * Summary of dirpath
+     * @var string
+     */
+    private string $dirpath;
+
+    /**
+     * Summary of setUp
+     * @return void
+     */
     public function setUp(): void
     {
         $this->firstArray = [
@@ -31,6 +48,10 @@ final class FileParserTest extends TestCase
         $this->dirpath = __DIR__ . '/fixtures/';
     }
 
+    /**
+     * Summary of testCorrect
+     * @return void
+     */
     public function testCorrect(): void
     {
         $filePath1 = $this->dirpath . 'file1.json';
@@ -38,16 +59,19 @@ final class FileParserTest extends TestCase
         $filePathEmpty = $this->dirpath . 'empty.json';
 
         $first = new FileParser($filePath1);
-        $second = new FileParser(realpath($filePath2));
+        $second = new FileParser( (string) realpath($filePath2));
         $empty = new FileParser($filePathEmpty);
 
         $this->assertEquals($this->firstArray, $first->getParsedData());
         $this->assertEquals($this->secondArray, $second->getParsedData());
 
-        $this->assertIsArray($empty->getParsedData());
         $this->assertEmpty($empty->getParsedData());
     }
 
+    /**
+     * Summary of testUndefined
+     * @return void
+     */
     public function testUndefined(): void
     {
         $this->expectException(\Exception::class);
