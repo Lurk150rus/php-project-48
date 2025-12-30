@@ -11,8 +11,8 @@ autoload:
 gendiff:
 	./bin/gendiff $(filter-out $@,$(MAKECMDGOALS))
 
-# test:
-# 	./bin/gendiff /home/kirill/Documents/Hexlet/php-project-48/examples/file1.json examples/file2.json
+example:
+	./bin/gendiff /home/kirill/Documents/Hexlet/php-project-48/tests/fixtures/file1.json tests/fixtures/file2.json
 
 lint:
 	composer exec --verbose phpcs -- src src bin

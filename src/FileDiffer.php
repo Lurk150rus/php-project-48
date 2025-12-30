@@ -4,9 +4,9 @@ namespace Hexlet\Code;
 
 final class FileDiffer
 {
-    private $first;
-    private $second;
-    public function __construct($first, $second)
+    private array $first;
+    private array $second;
+    public function __construct(array $first, array $second)
     {
         $this->first = $first;
         $this->second = $second;

@@ -29,7 +29,6 @@ final class FileParserTest extends TestCase
         ];
 
         $this->dirpath = __DIR__ . '/fixtures/';
-
     }
 
     public function testCorrect(): void
@@ -39,17 +38,18 @@ final class FileParserTest extends TestCase
         $filePathEmpty = $this->dirpath . 'empty.json';
 
         $first = new FileParser($filePath1);
-        $second = new FileParser($filePath2);
+        $second = new FileParser(realpath($filePath2));
         $empty = new FileParser($filePathEmpty);
 
         $this->assertEquals($this->firstArray, $first->getParsedData());
         $this->assertEquals($this->secondArray, $second->getParsedData());
-        
+
         $this->assertIsArray($empty->getParsedData());
         $this->assertEmpty($empty->getParsedData());
     }
 
-    public function testUndefined() : void {
+    public function testUndefined(): void
+    {
         $this->expectException(\Exception::class);
         $fileUndefined = 'undefined.json';
 
