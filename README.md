@@ -3,7 +3,8 @@
 
 # php-project-48
 [![Makefile PHP CI](https://github.com/Lurk150rus/php-project-48/actions/workflows/makefile.yml/badge.svg)](https://github.com/Lurk150rus/php-project-48/actions/workflows/makefile.yml)
-
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Lurk150rus_php-project-48&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Lurk150rus_php-project-48)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Lurk150rus_php-project-48&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Lurk150rus_php-project-48)
 ## Prerequisites
 
 * Linux, Macos, WSL
