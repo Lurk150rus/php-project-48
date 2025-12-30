@@ -6,11 +6,18 @@ namespace Hexlet\Code;
 
 use Hexlet\Code\Parsers\JsonParser;
 use Hexlet\Code\Parsers\ParserInterface;
+use Hexlet\Code\Parsers\YamlParser;
 
 final class FileParserFactory
 {
     public static function createParser(string $path): ParserInterface
     {
-        return new JsonParser($path);
+        $pathinfo = pathinfo($path, PATHINFO_EXTENSION);
+        
+        return match ($pathinfo) {
+            'json' => new JsonParser($path),
+            'yml', 'yaml' => new YamlParser($path),
+            default => throw new \RuntimeException('Unsupported file type')
+        };
     }
 }

@@ -28,10 +28,10 @@ final class genDiffTest extends TestCase
     }
 
     /**
-     * Summary of testCorrect
+     * Summary of testCorrectJson
      * @return void
      */
-    public function testCorrect(): void
+    public function testCorrectJson(): void
     {
         $correctDiff = array(
             ' - follow' => false,
@@ -44,6 +44,29 @@ final class genDiffTest extends TestCase
 
         $filePath1 = $this->dirpath . 'file1.json';
         $filePath2 = $this->dirpath . 'file2.json';
+
+        $diff_data = genDiff($filePath1, $filePath2);
+
+        $this->assertEquals($diff_data, $correctDiff);
+    }
+
+    /**
+     * Summary of testCorrectJson
+     * @return void
+     */
+    public function testCorrectYaml(): void
+    {
+        $correctDiff = array(
+            ' - follow' => false,
+            'host' => 'hexlet.io',
+            ' - proxy' => '123.234.53.22',
+            ' + timeout' => 50,
+            ' - timeout' => 20,
+            ' + verbose' => true,
+        );
+
+        $filePath1 = $this->dirpath . 'file1.yml';
+        $filePath2 = $this->dirpath . 'file2.yaml';
 
         $diff_data = genDiff($filePath1, $filePath2);
 
