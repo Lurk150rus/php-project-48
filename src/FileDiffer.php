@@ -4,12 +4,13 @@ namespace Hexlet\Code;
 
 final class FileDiffer
 {
-    private $first, $second;
+    private $first;
+    private $second;
     public function __construct($first, $second)
     {
         $this->first = $first;
         $this->second = $second;
-    
+
         $this->prepareData();
         $this->getResultDiff();
     }
@@ -24,16 +25,16 @@ final class FileDiffer
     {
         $result = [];
         $index = 0;
-        
-        foreach($this->first as $key => $value) {
+
+        foreach ($this->first as $key => $value) {
             $index++;
-        
-            if(isset($this->second[$key]) && $this->second[$key] === $value) {
+
+            if (isset($this->second[$key]) && $this->second[$key] === $value) {
                 $result[$key] = $value;
                 continue;
             }
 
-            if(isset($this->second[$key])) {
+            if (isset($this->second[$key])) {
                 $result[' + ' . $key] = $value;
                 $result[' - ' . $key] = $this->second[$key];
                 continue;
@@ -44,10 +45,12 @@ final class FileDiffer
 
         $tail = array_diff_key($this->second, $this->first);
 
-        $map_tail_keys = array_map(function($key) { return ' + ' . $key; }, array_keys($tail));
+        $mapTailKeys = array_map(function ($key) {
+            return ' + ' . $key;
+        }, array_keys($tail));
 
-        $map_tail = array_combine($map_tail_keys, $tail);
+        $mapTail = array_combine($mapTailKeys, $tail);
 
-        return [...$result, ...$map_tail];
+        return [...$result, ...$mapTail];
     }
 }

@@ -2,15 +2,15 @@
 
 namespace Hexlet\Code;
 
-function genDiff($first_file_path, $second_file_path)
+function genDiff($firstFilePath, $secondFilePath)
 {
-    $files = array_filter([$first_file_path, $second_file_path]);
+    $files = array_filter([$firstFilePath, $secondFilePath]);
     if (count($files) !== 2) {
         throw new \Exception("Invalid number of files");
     }
 
-    $first_file_data = (new FileParser($first_file_path))->getParsedData();
-    $second_file_data = (new FileParser($second_file_path))->getParsedData();
+    $firstFileData = (new FileParser($firstFilePath))->getParsedData();
+    $secondFileData = (new FileParser($secondFilePath))->getParsedData();
 
-    return (new FileDiffer($first_file_data, $second_file_data))->getResultDiff();
+    return (new FileDiffer($firstFileData, $secondFileData))->getResultDiff();
 }

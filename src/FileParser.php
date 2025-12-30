@@ -6,7 +6,9 @@ namespace Hexlet\Code;
 
 final class FileParser
 {
-    private $path, $file_content, $parsed_data;
+    private $path;
+    private $file_content;
+    private $parsed_data;
     public function __construct(string $path)
     {
         $this->path = $path;
