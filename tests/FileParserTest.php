@@ -53,6 +53,6 @@ final class FileParserTest extends TestCase
         $this->expectException(\Exception::class);
         $fileUndefined = 'undefined.json';
 
-        $first = new FileParser($fileUndefined);
+        new FileParser($fileUndefined);
     }
 }
