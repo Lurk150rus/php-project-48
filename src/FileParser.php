@@ -4,59 +4,19 @@ declare(strict_types=1);
 
 namespace Hexlet\Code;
 
+use Hexlet\Code\Parsers\ParserInterface;
+
 /**
  * Парсит файл, возвращает массив
  * Выбрасывает исключение, если файл не найден.
  */
 final class FileParser
 {
-    /**
-     * Путь к файлу
-     * @var string
-     */
-    private string $path;
-    /**
-     * Строчное представление, содержимого файла
-     * @var string
-     */
-    private string $file_content;
-    /**
-     * Данные, в формате массива
-     * @var array
-     */
-    private array $parsed_data;
+    private ParserInterface $parser;
 
-    /**
-     * Summary of __construct
-     * @param string $path
-     */
     public function __construct(string $path)
     {
-        $this->path = $path;
-        $this->getContent();
-        $this->parse();
-    }
-
-    /**
-     * Summary of getContent
-     * @throws \Exception
-     * @return void
-     */
-    private function getContent(): void
-    {
-        if (!file_exists($this->path)) {
-            throw new \Exception("File not found");
-        }
-        $this->file_content = (string) file_get_contents($this->path);
-    }
-
-    /**
-     * Summary of parse
-     * @return void
-     */
-    private function parse(): void
-    {
-        $this->parsed_data = json_decode($this->file_content, true) ?? [];
+        $this->parser = FileParserFactory::createParser($path);
     }
 
     /**
@@ -65,6 +25,6 @@ final class FileParser
      */
     public function getParsedData(): array
     {
-        return $this->parsed_data;
+        return $this->parser->getParsedData();
     }
 }
