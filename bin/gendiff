@@ -23,7 +23,7 @@ DOC;
 
 $args = Docopt::handle($doc, array('version' => 'Gendiff 0.1a'));
 
-$diff_data = genDiff($args['<filepath1>'], $args['<filepath2>'], $args['--format']);
+$diff_data = genDiff($args['<filepath1>'], $args['<filepath2>'], $args['--format'] ?: 'stylish');
 
 print_r($diff_data);
 
