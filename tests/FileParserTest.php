@@ -59,7 +59,7 @@ final class FileParserTest extends TestCase
         $filePathEmpty = $this->dirpath . 'empty.json';
 
         $first = new FileParser($filePath1);
-        $second = new FileParser( (string) realpath($filePath2));
+        $second = new FileParser((string) realpath($filePath2));
         $empty = new FileParser($filePathEmpty);
 
         $this->assertEquals($this->firstArray, $first->getParsedData());

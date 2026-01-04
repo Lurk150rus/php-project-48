@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 use function Differ\Differ\genDiff;
 
-final class genDiffTest extends TestCase
+final class GenDiffTest extends TestCase
 {
     /**
      * Summary of dirpath
@@ -72,12 +72,11 @@ final class genDiffTest extends TestCase
         $this->assertEquals($diff_data, $correctDiff);
     }
 
-    
     /**
      * Summary of testIncorrectFiles
      * @param array $files
      * @return void
-    */
+     */
     #[DataProvider('incorrectFilesDataProvider')]
     public function testIncorrectFiles($files): void
     {
@@ -89,8 +88,8 @@ final class genDiffTest extends TestCase
     public static function incorrectFilesDataProvider(): array
     {
         return [
-            'empty file' => [ ['', ''] ],
-            'only spaces' => [ ['   ', '   '] ],
+            'empty file' => [['', '']],
+            'only spaces' => [['   ', '   ']],
         ];
     }
 }

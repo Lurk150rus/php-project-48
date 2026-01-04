@@ -9,7 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 final class FileDifferTest extends TestCase
 {
-    private array $diff, $firstArray, $secondArray, $recursiveDiff;
+    private array $diff;
+    private array $firstArray;
+    private array $secondArray;
+    private mixed $recursiveDiff;
 
     const FIXTURES_DIRECTORY_PATH = __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR;
     public function setUp(): void
