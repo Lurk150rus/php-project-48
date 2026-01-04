@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Differ\Differ\Formatters;
 
 use Exception;
+use Symfony\Component\Yaml\Yaml;
 use Throwable;
 
 final class StylishFormatter implements FormatterInterface
@@ -40,7 +41,7 @@ final class StylishFormatter implements FormatterInterface
     {
         switch ($type) {
             case 'unchanged':
-                return [[$firstKey, $firstValue]];
+                return [['   ' . $firstKey, $firstValue]];
             case 'changed':
                 return [[' - ' . $firstKey, $firstValue], [' + ' . $firstKey, $secondValue]];
             case 'added':
@@ -55,6 +56,6 @@ final class StylishFormatter implements FormatterInterface
     public function format(array $diff): mixed
     {
         $formattedData = $this->buildFormattedDiff($diff);
-        return json_encode($formattedData, JSON_PRETTY_PRINT);
+        return str_replace('"', '', json_encode($formattedData, JSON_PRETTY_PRINT) );
     }
 }
