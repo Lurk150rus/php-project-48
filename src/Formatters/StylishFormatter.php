@@ -19,9 +19,9 @@ final class StylishFormatter implements FormatterInterface
         foreach ($diff as $key => $value) {
             if ($value['type'] == 'nested') {
                 $result .= PHP_EOL . $indentBase;
-                $result .= "$key: {";
+                $result .= "   $key: {";
                 $result .= $this->buildFormattedDiff($value['value_old'], $depth + 1);
-                $result .= PHP_EOL . str_repeat(' ', $depth * 4) . "}";
+                $result .= PHP_EOL . str_repeat(' ', $depth * 4 + 3) . "}";
                 continue;
             }
 
@@ -39,10 +39,10 @@ final class StylishFormatter implements FormatterInterface
             foreach ($formatteData as [$formattedKey, $formattedValue]) {
                 $result .= PHP_EOL . $indentBase;
                 if (is_array($formattedValue)) {
-                    $result .= "$key: {";
-                    $data = $this->formatArray([$formattedKey, $formattedValue], $depth += 1);
+                    $result .= "   $key: {";
+                    $data = $this->formatArray([$formattedValue], $depth + 1);
                     $result .= $data;
-                    $result .= PHP_EOL . str_repeat(' ', $depth * 4) . "}";
+                    $result .= PHP_EOL . str_repeat(' ', $depth * 4 + 3) . "}";
                     continue;
                 }
                 $result .= "$formattedKey: $formattedValue";
@@ -54,7 +54,7 @@ final class StylishFormatter implements FormatterInterface
     {
         $result = '';
         $indentBase = str_repeat(' ', $depth * 4);
-        foreach ($value as $item) {
+        foreach ($value as $key => $item) {
             if (is_array($item)) {
                 $result .= PHP_EOL . $indentBase;
                 $result .= "{";
@@ -62,10 +62,10 @@ final class StylishFormatter implements FormatterInterface
                     $item,
                     $depth + 1
                 );
-                $result .= PHP_EOL . str_repeat(' ', $depth * 4) . "}";
+                $result .= PHP_EOL . str_repeat(' ', $depth * 4 ) . "}";
             } else {
                 $result .= PHP_EOL . $indentBase;
-                $result .= "$item";
+                $result .= "$key: $item";
             }
         }
 
