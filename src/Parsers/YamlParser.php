@@ -8,7 +8,6 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlParser extends AbstractParser
 {
-
     /**
      * Summary of parse
      * @return void
@@ -17,5 +16,4 @@ final class YamlParser extends AbstractParser
     {
         $this->parsedData = Yaml::parse($this->fileContent) ?? [];
     }
-
 }

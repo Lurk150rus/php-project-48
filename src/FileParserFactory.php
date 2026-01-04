@@ -13,7 +13,7 @@ final class FileParserFactory
     public static function createParser(string $path): ParserInterface
     {
         $pathinfo = pathinfo($path, PATHINFO_EXTENSION);
-        
+
         return match ($pathinfo) {
             'json' => new JsonParser($path),
             'yml', 'yaml' => new YamlParser($path),

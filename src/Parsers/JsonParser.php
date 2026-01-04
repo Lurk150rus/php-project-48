@@ -6,7 +6,6 @@ namespace Hexlet\Code\Parsers;
 
 final class JsonParser extends AbstractParser
 {
-
     /**
      * Summary of parse
      * @return void
@@ -15,5 +14,4 @@ final class JsonParser extends AbstractParser
     {
         $this->parsedData = json_decode($this->fileContent, true) ?? [];
     }
-
 }

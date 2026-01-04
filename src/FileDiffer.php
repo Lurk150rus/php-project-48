@@ -13,7 +13,6 @@ final class FileDiffer
     private $resultDiff;
 
     private $formatter;
-    const TYPES = ['added', 'removed', 'unchanged', 'changed'];
 
     public function __construct(array $first, array $second, string $format = '')
     {
@@ -33,12 +32,11 @@ final class FileDiffer
     private function makeResultDiff($first, $second)
     {
         // 1. Формируем ключи.
-        $unique_keys = $this->getUniqueKeys($first, $second);
+        $uniqueKeys = $this->getUniqueKeys($first, $second);
 
         $result = [];
 
-        foreach ($unique_keys as $key) {
-
+        foreach ($uniqueKeys as $key) {
             // 2. Проверяем на наличие ключа в обоих массивах.
             if (isset($first[$key]) && isset($second[$key])) {
                 if ($first[$key] === $second[$key]) {
@@ -47,7 +45,10 @@ final class FileDiffer
                 } else {
                     // 2.1: рекурсивная проверка на массив.
                     if (is_array($first[$key]) && is_array($second[$key])) {
-                        $result[$key] = ['type' => 'nested', 'value_old' => $this->makeResultDiff($first[$key], $second[$key])];
+                        $result[$key] = [
+                            'type' => 'nested',
+                            'value_old' => $this->makeResultDiff($first[$key], $second[$key])
+                        ];
                         continue;
                     }
 
