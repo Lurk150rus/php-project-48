@@ -12,9 +12,9 @@ $f1 = sprintf('tests/fixtures/file3%s.json', $recursive ? '_recursive' : '');
 $f2 = sprintf('tests/fixtures/file4%s.json', $recursive ? '_recursive' : '');
 
 
-$diff_data = genDiff($f1, $f2);
+$diff_data = genDiff($f1, $f2, 'plain');
 
-$json = json_encode($diff_data);
+$json = json_encode($diff_data, JSON_PRETTY_PRINT);
 
 file_put_contents('tests/fixtures/result.json', $json);
 

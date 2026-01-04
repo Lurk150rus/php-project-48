@@ -9,13 +9,24 @@ use Throwable;
 
 final class PlainFormatter implements FormatterInterface
 {
+
     private function buildFormattedDiff($diff)
     {
         $result = [];
         foreach ($diff as $key => $value) {
 
             if ($value['type'] == 'nested') {
-                $result[$key] = $this->buildFormattedDiff($value['value_old']);
+                $value_combined = array_combine(
+                    array_map(
+                        function ($item) use ($key) {
+                            return "$key.$item";
+                        },
+                        array_keys($value['value_old'])
+                    ),
+                    array_values($value['value_old'])
+                );
+
+                $result[] = $this->buildFormattedDiff($value_combined);
                 continue;
             }
 
@@ -25,24 +36,54 @@ final class PlainFormatter implements FormatterInterface
                 throw new Exception("Ошибка ключа $key " . PHP_EOL . $e->getMessage());
             }
 
-            foreach ($formatted_data as [$formatted_key, $formatted_value]) {
-                $result[$formatted_key] = $formatted_value;
+            foreach ($formatted_data as $formatted_value) {
+                $result[] = $formatted_value;
             }
         }
+
+        return $result;
+    }
+
+    private function flatArray($array): array
+    {
+        $result = [];
+
+        foreach ($array as $value) {
+
+            if (is_array($value)) {
+                $result = array_merge($result, $this->flatArray($value));
+            } else {
+                $result[] = $value;
+            }
+        }
+
         return $result;
     }
 
     private function formatData($type, $first_key, $first_value, $second_value = null): array
     {
+
         switch ($type) {
             case 'unchanged':
-                return [[$first_key, $first_value]];
+                return [];
+
             case 'changed':
-                return [[' - ' . $first_key, $first_value], [' + ' . $first_key, $second_value]];
+                $first_value = is_array($first_value) ? '[complex value]' : $first_value;
+                $second_value = is_array($second_value) ? '[complex value]' : $second_value;
+
+                return [
+                    sprintf("Property '%s' was updated. From '%s' to '%s'", $first_key, $first_value, $second_value)
+                ];
+
             case 'added':
-                return [[' + ' .  $first_key, $first_value]];
+                return [
+                    sprintf("Property '$first_key' was added with value: %s", is_array($first_value) ? '[complex value]' : $first_value)
+                ];
+
             case 'removed':
-                return [[" - $first_key", $first_value]];
+                return [
+                    "Property '$first_key' was removed"
+                ];
         }
 
         throw new Exception('Undefined type');
@@ -50,6 +91,7 @@ final class PlainFormatter implements FormatterInterface
 
     public function format(array $diff)
     {
-        return $this->buildFormattedDiff($diff);
+        $diff = $this->flatArray($this->buildFormattedDiff($diff));
+        return $diff;
     }
 }
