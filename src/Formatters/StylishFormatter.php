@@ -75,7 +75,7 @@ final class StylishFormatter implements FormatterInterface
                     break;
 
                 case 'added':
-                    $val = $this->stringify($node['value_old'], $depth);
+                    $val = $this->stringify($node['value_new'] ?? $node['value_old'], $depth);
                     $lines[] = $markerIndent . "+ " . "{$key}: " . $val;
                     break;
 
