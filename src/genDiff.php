@@ -2,7 +2,7 @@
 
 namespace Hexlet\Code;
 
-function genDiff(string $firstFilePath, string $secondFilePath): array
+function genDiff(string $firstFilePath, string $secondFilePath, string $format): array
 {
     $files = array_filter([trim($firstFilePath), trim($secondFilePath)]);
 
@@ -15,5 +15,5 @@ function genDiff(string $firstFilePath, string $secondFilePath): array
     $firstFileData = (new FileParser($firstFilePath))->getParsedData();
     $secondFileData = (new FileParser($secondFilePath))->getParsedData();
 
-    return (new FileDiffer($firstFileData, $secondFileData))->getResultDiff();
+    return (new FileDiffer($firstFileData, $secondFileData, $format))->getResultDiff();
 }

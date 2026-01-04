@@ -10,11 +10,12 @@ $doc = <<<DOC
 Generate diff
 
 Usage:
-  gendiff <filepath1> <filepath2>
+  gendiff [options] <filepath1> <filepath2>
   gendiff (-h|--help)
   gendiff (-v|--version)
 
 Options:
+  -f --format [type]  output format (default: "stylish").
   -h --help     Show this screen.
   --version     Show version.
 
@@ -22,7 +23,7 @@ DOC;
 
 $args = Docopt::handle($doc, array('version' => 'Gendiff 0.1a'));
 
-$diff_data = genDiff($args['<filepath1>'], $args['<filepath2>']);
+$diff_data = genDiff($args['<filepath1>'], $args['<filepath2>'], $args['--format']);
 
 print_r($diff_data);
 
