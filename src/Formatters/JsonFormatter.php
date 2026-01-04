@@ -19,29 +19,34 @@ final class JsonFormatter implements FormatterInterface
             }
 
             try {
-                $formatted_data = $this->formatData($value['type'], $key, $value['value_old'], $value['value_new'] ?? null);
+                $formatteData = $this->formatData(
+                    $value['type'],
+                    $key,
+                    $value['value_old'],
+                    $value['value_new'] ?? null
+                );
             } catch (Throwable $e) {
                 throw new Exception("Ошибка ключа $key " . PHP_EOL . $e->getMessage());
             }
 
-            foreach ($formatted_data as [$formatted_key, $formatted_value]) {
-                $result[$formatted_key] = $formatted_value;
+            foreach ($formatteData as [$formattedKey, $formattedValue]) {
+                $result[$formattedKey] = $formattedValue;
             }
         }
         return $result;
     }
 
-    private function formatData($type, $first_key, $first_value, $second_value = null): array
+    private function formatData($type, $firstKey, $firstValue, $secondValue = null): array
     {
         switch ($type) {
             case 'unchanged':
-                return [[$first_key, $first_value]];
+                return [[$firstKey, $firstValue]];
             case 'changed':
-                return [[' - ' . $first_key, $first_value], [' + ' . $first_key, $second_value]];
+                return [[' - ' . $firstKey, $firstValue], [' + ' . $firstKey, $secondValue]];
             case 'added':
-                return [[' + ' .  $first_key, $first_value]];
+                return [[' + ' .  $firstKey, $firstValue]];
             case 'removed':
-                return [[" - $first_key", $first_value]];
+                return [[" - $firstKey", $firstValue]];
         }
 
         throw new Exception('Undefined type');

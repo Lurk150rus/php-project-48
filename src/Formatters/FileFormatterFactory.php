@@ -6,9 +6,9 @@ namespace Hexlet\Code\Formatters;
 
 final class FileFormatterFactory
 {
-    public static function createFormatter(string $formatter_type = ''): FormatterInterface
+    public static function createFormatter(string $format = ''): FormatterInterface
     {
-        return match ($formatter_type) {
+        return match ($format) {
             'plain' => new PlainFormatter(),
             'json' => new JsonFormatter(),
             default => new StylishFormatter()
