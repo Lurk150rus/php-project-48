@@ -2,6 +2,9 @@
 
 namespace Hexlet\Code;
 
+use Exception;
+use Throwable;
+
 final class FileDiffer
 {
     private $first;
@@ -16,77 +19,98 @@ final class FileDiffer
         $this->second = $second;
     }
 
-    private function prepareData($first, $second): array
+    private function getUniqueKeys($first, $second): array
     {
-        ksort($first);
-        ksort($second);
-
-        return [$first, $second];
+        $uniqueKeys = array_unique([...array_keys($first), ...array_keys($second)]);
+        sort($uniqueKeys);
+        return $uniqueKeys;
     }
 
-    private function formatData($type, $first_key, $first_value, $second_value = null): void
+    private function buildFormattedDiff($diff)
+    {
+        $result = [];
+        foreach ($diff as $key => $value) {
+
+            if ($value['type'] == 'nested') {
+                $result[$key] = $this->buildFormattedDiff($value['value_old']);
+                continue;
+            }
+
+            try {
+                $formatted_data = $this->formatData($value['type'], $key, $value['value_old'], $value['value_new'] ?? null);
+            } catch (Throwable $e) {
+                throw new Exception("Ошибка ключа $key " . PHP_EOL . $e->getMessage());
+            }
+
+            foreach ($formatted_data as [$formatted_key, $formatted_value]) {
+                $result[$formatted_key] = $formatted_value;
+            }
+        }
+        return $result;
+    }
+
+    private function formatData($type, $first_key, $first_value, $second_value = null): array
     {
         switch ($type) {
             case 'unchanged':
-                $this->resultDiff[$first_key] = $first_value;
-                return;
+                return [[$first_key, $first_value]];
             case 'changed':
-                $this->resultDiff[' + ' . $first_key] = $first_value;
-                $this->resultDiff[' - ' . $first_key] = $second_value;
-                return;
+                return [[' + ' . $first_key, $first_value], [' - ' . $first_key, $second_value]];
             case 'added':
-                $this->resultDiff[' + ' . $first_key] = $first_value;
-                return;
+                return [[' + ' .  $first_key, $first_value]];
             case 'removed':
-                $this->resultDiff[' - ' . $first_key] = $first_value;
-                return;
+                return [[" - $first_key", $first_value]];
         }
+
+        throw new Exception('Undefined type');
     }
 
     private function makeResultDiff($first, $second)
     {
-        // 1. Подготовка входных данных
-        [$first, $second] = $this->prepareData($first, $second);
+        // 1. Формируем ключи.
+        $unique_keys = $this->getUniqueKeys($first, $second);
 
-        $this->resultDiff = [];
+        $result = [];
 
-        // 2. Основной цикл сравнения ключей из первого массива
-        foreach ($first as $key => $value) {
+        foreach ($unique_keys as $key) {
 
-            // 3. Обработка одинаковых ключей
-            if (isset($second[$key]) && $second[$key] === $value) {
-                $this->formatData('unchanged', $key, $value);
+            // 2. Проверяем на наличие ключа в обоих массивах.
+            if (isset($first[$key]) && isset($second[$key])) {
+                if ($first[$key] === $second[$key]) {
+                    $result[$key] = ['type' => 'unchanged', 'value_old' => $first[$key]];
+                    continue;
+                } else {
+                    // TODO: рекурсивная проверка на массив.
+                    if (is_array($first[$key]) && is_array($second[$key])) {
+                        $result[$key] = ['type' => 'nested', 'value_old' => $this->makeResultDiff($first[$key], $second[$key])];
+                        continue;
+                    }
+
+                    $result[$key] = ['type' => 'changed', 'value_old' => $first[$key], 'value_new' => $second[$key]];
+                    continue;
+                }
+            }
+
+            // 3. Проверяем на наличие ключа только в одном из массивов.
+            if (isset($first[$key])) {
+                $result[$key] = ['type' => 'removed', 'value_old' => $first[$key]];
                 continue;
             }
 
-            // 4. Обработка изменённых значений
+            // 3. Проверяем на наличие ключа только в одном из массивов.
             if (isset($second[$key])) {
-
-                // 4.1. Сравнение вложенных массивов
-                // if (is_array($value) && is_array($second[$key])) {
-                //     $this->makeResultDiff($value, $second[$key]);
-                //     continue;
-                // }
-
-                $this->formatData('changed', $key, $value, $second[$key]);
+                $result[$key] = ['type' => 'added', 'value_old' => $second[$key]];
                 continue;
             }
-
-            $this->formatData('removed', $key, $value); // 5. Удалённые ключи: ключи, которые есть только в первом массиве и отсутствуют во втором массиве
         }
-
-        // 5. Хвост: ключи, которые есть только во втором массиве
-        $tail = array_diff_key($second, $first);
-
-        foreach ($tail as $key => $value) {
-            $this->formatData('added', $key, $value);
-        }
+        return $result;
     }
 
     public function getResultDiff(): array
     {
         if (! isset($this->resultDiff)) {
-            $this->makeResultDiff($this->first, $this->second);
+            $diff = $this->makeResultDiff($this->first, $this->second);
+            return $this->buildFormattedDiff($diff);
         }
 
         return $this->resultDiff;
