@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code;
+namespace Hexlet\Code\Parsers;
 
 use Hexlet\Code\Parsers\JsonParser;
 use Hexlet\Code\Parsers\ParserInterface;
 use Hexlet\Code\Parsers\YamlParser;
 
-final class FileParserFactory
+final class ParserFactory
 {
     public static function createParser(string $path): ParserInterface
     {

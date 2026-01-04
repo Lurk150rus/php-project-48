@@ -9,7 +9,7 @@ use Throwable;
 
 final class PlainFormatter implements FormatterInterface
 {
-    private function buildFormattedDiff($diff)
+    private function buildFormattedDiff(array $diff): array
     {
         $result = [];
         foreach ($diff as $key => $value) {
@@ -47,7 +47,7 @@ final class PlainFormatter implements FormatterInterface
         return $result;
     }
 
-    private function flatArray($array): array
+    private function flatArray(array $array): array
     {
         $result = [];
 
@@ -62,7 +62,7 @@ final class PlainFormatter implements FormatterInterface
         return $result;
     }
 
-    private function formatData($type, $firstKey, $firstValue, $secondValue = null): array
+    private function formatData(string $type, string $firstKey, mixed $firstValue, mixed $secondValue = null): array
     {
 
         switch ($type) {
@@ -94,7 +94,7 @@ final class PlainFormatter implements FormatterInterface
         throw new Exception('Undefined type');
     }
 
-    public function format(array $diff)
+    public function format(array $diff): mixed
     {
         $diff = $this->flatArray($this->buildFormattedDiff($diff));
         return $diff;

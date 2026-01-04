@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hexlet\Code;
 
+use Hexlet\Code\Parsers\ParserFactory;
 use Hexlet\Code\Parsers\ParserInterface;
 
 /**
@@ -16,7 +17,7 @@ final class FileParser
 
     public function __construct(string $path)
     {
-        $this->parser = FileParserFactory::createParser($path);
+        $this->parser = ParserFactory::createParser($path);
     }
 
     /**

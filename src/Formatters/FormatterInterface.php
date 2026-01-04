@@ -6,5 +6,5 @@ namespace Hexlet\Code\Formatters;
 
 interface FormatterInterface
 {
-    public function format(array $diff);
+    public function format(array $diff): mixed;
 }

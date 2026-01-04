@@ -22,7 +22,7 @@ final class FileDifferTest extends TestCase
             ' + timeout' => 20,
             ' + verbose' => true,
         );
-        $this->recursiveDiff = json_decode(file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file3_file4_recursive_result.json'), true);
+        $this->recursiveDiff = json_decode((string) file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file3_file4_recursive_result.json'), true);
     }
     public function testCorrectDiff(): void
     {
@@ -47,9 +47,9 @@ final class FileDifferTest extends TestCase
 
     public function testRecursiveDiff(): void
     {
-        $this->firstArray = json_decode(file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file3_recursive.json'), true);
+        $this->firstArray = json_decode((string) file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file3_recursive.json'), true);
 
-        $this->secondArray = json_decode(file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file4_recursive.json'), true);
+        $this->secondArray = json_decode((string) file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file4_recursive.json'), true);
 
         $fileDiffer = new FileDiffer($this->firstArray, $this->secondArray);
 

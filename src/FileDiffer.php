@@ -4,15 +4,16 @@ namespace Hexlet\Code;
 
 use Exception;
 use Hexlet\Code\Formatters\FileFormatterFactory;
+use Hexlet\Code\Formatters\FormatterInterface;
 use Throwable;
 
 final class FileDiffer
 {
-    private $first;
-    private $second;
-    private $resultDiff;
+    private array $first;
+    private array $second;
+    private mixed $resultDiff;
 
-    private $formatter;
+    private FormatterInterface $formatter;
 
     public function __construct(array $first, array $second, string $format = '')
     {
@@ -21,7 +22,7 @@ final class FileDiffer
         $this->formatter = FileFormatterFactory::createFormatter($format);
     }
 
-    private function getUniqueKeys($first, $second): array
+    private function getUniqueKeys(array $first, array $second): array
     {
         $uniqueKeys = array_unique([...array_keys($first), ...array_keys($second)]);
         sort($uniqueKeys);
@@ -29,7 +30,7 @@ final class FileDiffer
     }
 
 
-    private function makeResultDiff($first, $second)
+    private function makeResultDiff(array $first, array $second): array
     {
         // 1. Формируем ключи.
         $uniqueKeys = $this->getUniqueKeys($first, $second);
@@ -72,7 +73,7 @@ final class FileDiffer
         return $result;
     }
 
-    public function getResultDiff()
+    public function getResultDiff(): mixed
     {
         if (! isset($this->resultDiff)) {
             $diff = $this->makeResultDiff($this->first, $this->second);

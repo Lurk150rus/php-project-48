@@ -9,7 +9,7 @@ use Throwable;
 
 final class JsonFormatter implements FormatterInterface
 {
-    private function buildFormattedDiff($diff)
+    private function buildFormattedDiff(array $diff): array
     {
         $result = [];
         foreach ($diff as $key => $value) {
@@ -36,7 +36,7 @@ final class JsonFormatter implements FormatterInterface
         return $result;
     }
 
-    private function formatData($type, $firstKey, $firstValue, $secondValue = null): array
+    private function formatData(string $type, string $firstKey, mixed $firstValue, mixed $secondValue = null): array
     {
         switch ($type) {
             case 'unchanged':
@@ -52,7 +52,7 @@ final class JsonFormatter implements FormatterInterface
         throw new Exception('Undefined type');
     }
 
-    public function format(array $diff)
+    public function format(array $diff): mixed
     {
         return $this->buildFormattedDiff($diff);
     }
