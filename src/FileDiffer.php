@@ -3,20 +3,23 @@
 namespace Hexlet\Code;
 
 use Exception;
+use Hexlet\Code\Formatters\FileFormatterFactory;
 use Throwable;
 
 final class FileDiffer
 {
     private $first;
     private $second;
-    private array $resultDiff;
+    private $resultDiff;
 
+    private $formatter;
     const TYPES = ['added', 'removed', 'unchanged', 'changed'];
 
-    public function __construct(array $first, array $second)
+    public function __construct(array $first, array $second, string $format = '')
     {
         $this->first = $first;
         $this->second = $second;
+        $this->formatter = FileFormatterFactory::createFormatter($format);
     }
 
     private function getUniqueKeys($first, $second): array
@@ -26,44 +29,6 @@ final class FileDiffer
         return $uniqueKeys;
     }
 
-    private function buildFormattedDiff($diff)
-    {
-        $result = [];
-        foreach ($diff as $key => $value) {
-
-            if ($value['type'] == 'nested') {
-                $result[$key] = $this->buildFormattedDiff($value['value_old']);
-                continue;
-            }
-
-            try {
-                $formatted_data = $this->formatData($value['type'], $key, $value['value_old'], $value['value_new'] ?? null);
-            } catch (Throwable $e) {
-                throw new Exception("Ошибка ключа $key " . PHP_EOL . $e->getMessage());
-            }
-
-            foreach ($formatted_data as [$formatted_key, $formatted_value]) {
-                $result[$formatted_key] = $formatted_value;
-            }
-        }
-        return $result;
-    }
-
-    private function formatData($type, $first_key, $first_value, $second_value = null): array
-    {
-        switch ($type) {
-            case 'unchanged':
-                return [[$first_key, $first_value]];
-            case 'changed':
-                return [[' - ' . $first_key, $first_value], [' + ' . $first_key, $second_value]];
-            case 'added':
-                return [[' + ' .  $first_key, $first_value]];
-            case 'removed':
-                return [[" - $first_key", $first_value]];
-        }
-
-        throw new Exception('Undefined type');
-    }
 
     private function makeResultDiff($first, $second)
     {
@@ -80,7 +45,7 @@ final class FileDiffer
                     $result[$key] = ['type' => 'unchanged', 'value_old' => $first[$key]];
                     continue;
                 } else {
-                    // TODO: рекурсивная проверка на массив.
+                    // 2.1: рекурсивная проверка на массив.
                     if (is_array($first[$key]) && is_array($second[$key])) {
                         $result[$key] = ['type' => 'nested', 'value_old' => $this->makeResultDiff($first[$key], $second[$key])];
                         continue;
@@ -106,11 +71,11 @@ final class FileDiffer
         return $result;
     }
 
-    public function getResultDiff(): array
+    public function getResultDiff()
     {
         if (! isset($this->resultDiff)) {
             $diff = $this->makeResultDiff($this->first, $this->second);
-            $this->resultDiff = $this->buildFormattedDiff($diff);
+            $this->resultDiff = $this->formatter->format($diff);
         }
 
         return $this->resultDiff;
