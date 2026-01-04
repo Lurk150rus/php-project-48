@@ -10,12 +10,18 @@ use Throwable;
 
 final class StylishFormatter implements FormatterInterface
 {
-    private function buildFormattedDiff(array $diff): array
+    private function buildFormattedDiff(array $diff, int $depth = 1): string
     {
-        $result = [];
+        $result = '';
+
+        $indentBase = str_repeat(' ', $depth * 4 - 2);
+
         foreach ($diff as $key => $value) {
             if ($value['type'] == 'nested') {
-                $result[$key] = $this->buildFormattedDiff($value['value_old']);
+                $result .= PHP_EOL . $indentBase;
+                $result .= "$key: {";
+                $result .= $this->buildFormattedDiff($value['value_old'], $depth + 1);
+                $result .= PHP_EOL . str_repeat(' ', $depth * 4) . "}";
                 continue;
             }
 
@@ -31,7 +37,8 @@ final class StylishFormatter implements FormatterInterface
             }
 
             foreach ($formatteData as [$formattedKey, $formattedValue]) {
-                $result[$formattedKey] = $formattedValue;
+                $result .= PHP_EOL . $indentBase;
+                $result .= "$formattedKey: $formattedValue";
             }
         }
         return $result;
@@ -39,6 +46,14 @@ final class StylishFormatter implements FormatterInterface
 
     private function formatData(string $type, string $firstKey, mixed $firstValue, mixed $secondValue = null): array
     {
+        if (is_bool($firstValue)) {
+            $firstValue = $firstValue ? 'true' : 'false';
+        }
+
+        if (is_bool($secondValue)) {
+            $secondValue = $secondValue ? 'true' : 'false';
+        }
+
         switch ($type) {
             case 'unchanged':
                 return [['   ' . $firstKey, $firstValue]];
@@ -55,7 +70,10 @@ final class StylishFormatter implements FormatterInterface
 
     public function format(array $diff): mixed
     {
-        $formattedData = $this->buildFormattedDiff($diff);
-        return str_replace('"', '', json_encode($formattedData, JSON_PRETTY_PRINT) );
+        $formattedData = '{';
+        $formattedData .= $this->buildFormattedDiff($diff);
+        $formattedData .= PHP_EOL . '}';
+
+        return $formattedData;
     }
 }

@@ -14,6 +14,9 @@ gendiff:
 example:
 	./bin/gendiff -f stylish /home/kirill/Documents/Hexlet/php-project-48/tests/fixtures/file1.json tests/fixtures/file2.json
 
+recursive-example:
+	./bin/gendiff -f stylish /home/kirill/Documents/Hexlet/php-project-48/tests/fixtures/file1_recursive.json tests/fixtures/file2_recursive.json
+
 lint:
 	composer exec --verbose phpcs -- src src bin
 	composer exec --verbose phpstan
