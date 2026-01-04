@@ -13,7 +13,7 @@ final class JsonFormatter implements FormatterInterface
     {
         $result = [];
         foreach ($diff as $key => $value) {
-            if ($value['type'] == 'nested') {
+            if ($value['type'] === 'nested') {
                 $result[$key] = $this->buildFormattedDiff($value['value_old']);
                 continue;
             }

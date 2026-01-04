@@ -4,7 +4,7 @@ namespace Differ\Differ;
 
 function genDiff(string $firstFilePath, string $secondFilePath, string $format = ''): mixed
 {
-    $files = array_filter([trim($firstFilePath), trim($secondFilePath)]);
+    $files = array_filter([trim($firstFilePath), trim($secondFilePath)], fn($elem) => !empty($elem));
 
     if (count($files) !== 2) {
         throw new \Exception("Invalid number of files");

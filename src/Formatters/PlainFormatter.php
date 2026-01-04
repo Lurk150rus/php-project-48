@@ -39,7 +39,7 @@ final class PlainFormatter implements FormatterInterface
     {
         $result = [];
         foreach ($diff as $key => $value) {
-            if ($value['type'] == 'nested') {
+            if ($value['type'] === 'nested') {
                 $valueCombined = array_combine(
                     array_map(
                         function ($item) use ($key) {
