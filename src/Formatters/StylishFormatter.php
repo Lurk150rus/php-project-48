@@ -65,23 +65,23 @@ final class StylishFormatter implements FormatterInterface
                     break;
 
                 case 'unchanged':
-                    $val = $this->stringify($node['value_old'] ?? null, $depth);
+                    $val = $this->stringify($node['value_old'], $depth);
                     $lines[] = $markerIndent . "  " . "{$key}: " . $val;
                     break;
 
                 case 'removed':
-                    $val = $this->stringify($node['value_old'] ?? null, $depth);
+                    $val = $this->stringify($node['value_old'], $depth);
                     $lines[] = $markerIndent . "- " . "{$key}: " . $val;
                     break;
 
                 case 'added':
-                    $val = $this->stringify($node['value_old'] ?? null, $depth);
+                    $val = $this->stringify($node['value_old'], $depth);
                     $lines[] = $markerIndent . "+ " . "{$key}: " . $val;
                     break;
 
                 case 'changed':
-                    $valOld = $this->stringify($node['value_old'] ?? null, $depth);
-                    $valNew = $this->stringify($node['value_new'] ?? null, $depth);
+                    $valOld = $this->stringify($node['value_old'], $depth);
+                    $valNew = $this->stringify($node['value_new'], $depth);
                     $lines[] = $markerIndent . "- " . "{$key}: " . $valOld;
                     $lines[] = $markerIndent . "+ " . "{$key}: " . $valNew;
                     break;
