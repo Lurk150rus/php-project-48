@@ -54,6 +54,6 @@ final class JsonFormatter implements FormatterInterface
 
     public function format(array $diff): mixed
     {
-        return $this->buildFormattedDiff($diff);
+        return json_encode($this->buildFormattedDiff($diff));
     }
 }
