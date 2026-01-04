@@ -10,6 +10,7 @@ final class FileFormatterFactory
     {
         return match ($formatter_type) {
             'plain' => new PlainFormatter(), 
+            'json' => new JsonFormatter(), 
             default => new StylishFormatter()
         };
     }
