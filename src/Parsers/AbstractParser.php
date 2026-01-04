@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code\Parsers;
+namespace Differ\Differ\Parsers;
 
 abstract class AbstractParser implements ParserInterface
 {

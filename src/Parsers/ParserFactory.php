@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code\Parsers;
+namespace Differ\Differ\Parsers;
 
-use Hexlet\Code\Parsers\JsonParser;
-use Hexlet\Code\Parsers\ParserInterface;
-use Hexlet\Code\Parsers\YamlParser;
+use Differ\Differ\Parsers\JsonParser;
+use Differ\Differ\Parsers\ParserInterface;
+use Differ\Differ\Parsers\YamlParser;
 
 final class ParserFactory
 {

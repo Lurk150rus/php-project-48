@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code\Tests;
+namespace Differ\Differ\Tests;
 
 use Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function Hexlet\Code\genDiff;
+use function Differ\Differ\genDiff;
 
 final class genDiffTest extends TestCase
 {

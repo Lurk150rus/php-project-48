@@ -8,7 +8,7 @@
         ],
     "autoload": {
         "psr-4": {
-            "Hexlet\\Code\\": "src/"
+            "Differ\\Differ\\": "src/"
         },
         "files": [
             "src/genDiff.php"
@@ -16,7 +16,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Hexlet\\Code\\Tests\\": "tests/"
+            "Differ\\Differ\\Tests\\": "tests/"
         }
     },
     "authors": [

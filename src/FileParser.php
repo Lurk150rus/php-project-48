@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code;
+namespace Differ\Differ;
 
-use Hexlet\Code\Parsers\ParserFactory;
-use Hexlet\Code\Parsers\ParserInterface;
+use Differ\Differ\Parsers\ParserFactory;
+use Differ\Differ\Parsers\ParserInterface;
 
 /**
  * Парсит файл, возвращает массив

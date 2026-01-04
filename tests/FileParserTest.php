@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code\Tests;
+namespace Differ\Differ\Tests;
 
-use Hexlet\Code\FileParser;
+use Differ\Differ\FileParser;
 use PHPUnit\Framework\TestCase;
 
 final class FileParserTest extends TestCase

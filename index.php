@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use function Hexlet\Code\genDiff;
+use function Differ\Differ\genDiff;
 
 set_time_limit(1);
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code\Tests;
+namespace Differ\Differ\Tests;
 
-use Hexlet\Code\FileDiffer;
+use Differ\Differ\FileDiffer;
 use PHPUnit\Framework\TestCase;
 
 final class FileDifferTest extends TestCase

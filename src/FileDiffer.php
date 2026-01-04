@@ -1,11 +1,9 @@
 <?php
 
-namespace Hexlet\Code;
+namespace Differ\Differ;
 
-use Exception;
-use Hexlet\Code\Formatters\FileFormatterFactory;
-use Hexlet\Code\Formatters\FormatterInterface;
-use Throwable;
+use Differ\Differ\Formatters\FileFormatterFactory;
+use Differ\Differ\Formatters\FormatterInterface;
 
 final class FileDiffer
 {

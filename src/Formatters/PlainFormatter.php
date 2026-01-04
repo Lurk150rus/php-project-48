@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hexlet\Code\Formatters;
+namespace Differ\Differ\Formatters;
 
 use Exception;
 use Throwable;
