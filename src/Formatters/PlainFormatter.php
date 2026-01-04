@@ -16,7 +16,7 @@ final class PlainFormatter implements FormatterInterface
         }
 
         if ($value === '') {
-            return '';
+            return "''";
         }
 
         if (is_null($value)) {
@@ -93,13 +93,13 @@ final class PlainFormatter implements FormatterInterface
             case 'changed':
 
                 return [
-                    sprintf("Property '%s' was updated. From '%s' to '%s'", $firstKey, $this->stringify($firstValue), $this->stringify($secondValue))
+                    sprintf("Property %s was updated. From %s to '%s'", $firstKey, $this->stringify($firstValue), $this->stringify($secondValue))
                 ];
 
             case 'added':
                 return [
                     sprintf(
-                        "Property '$firstKey' was added with value: %s",
+                        "Property '$firstKey' was added with value: '%s'",
                         $this->stringify($firstValue)
                     )
                 ];
