@@ -37,7 +37,7 @@ final class FileDiffer
 
         foreach ($uniqueKeys as $key) {
             // 2. Проверяем на наличие ключа в обоих массивах.
-            if (isset($first[$key]) && isset($second[$key])) {
+            if (array_key_exists($key, $first) && array_key_exists($key, $second)) {
                 if ($first[$key] === $second[$key]) {
                     $result[$key] = ['type' => 'unchanged', 'value_old' => $first[$key]];
                     continue;
@@ -57,13 +57,13 @@ final class FileDiffer
             }
 
             // 3. Проверяем на наличие ключа только в одном из массивов.
-            if (isset($first[$key])) {
+            if (array_key_exists($key, $first)) {
                 $result[$key] = ['type' => 'removed', 'value_old' => $first[$key]];
                 continue;
             }
 
             // 3. Проверяем на наличие ключа только в одном из массивов.
-            if (isset($second[$key])) {
+            if (array_key_exists($key, $second)) {
                 $result[$key] = ['type' => 'added', 'value_old' => $second[$key]];
                 continue;
             }

@@ -20,6 +20,6 @@ file_put_contents('tests/fixtures/result.json', $diff_data);
 
 
 echo ('<pre>');
-print_r($diff_data);
+// print_r($diff_data);
 // var_dump($json);
 echo ('</pre>');

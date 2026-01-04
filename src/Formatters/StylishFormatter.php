@@ -14,7 +14,9 @@ final class StylishFormatter implements FormatterInterface
             return $value ? 'true' : 'false';
         }
 
-        if ($value === '') return '';
+        if ($value === '') {
+            return '';
+        }
 
         if (is_null($value)) {
             return 'null';
