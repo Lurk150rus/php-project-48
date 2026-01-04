@@ -97,6 +97,6 @@ final class PlainFormatter implements FormatterInterface
     public function format(array $diff): mixed
     {
         $diff = $this->flatArray($this->buildFormattedDiff($diff));
-        return $diff;
+        return implode(PHP_EOL, $diff);
     }
 }
