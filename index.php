@@ -18,6 +18,6 @@ $diff_data = genDiff($f1, $f2, 'stylish');
 
 file_put_contents('tests/fixtures/result.json', $diff_data);
 
-echo ('<pre>');
+// echo ('<pre>');
 // var_dump($json);
-echo ('</pre>');
+// echo ('</pre>');
