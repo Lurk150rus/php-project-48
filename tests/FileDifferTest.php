@@ -9,7 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 final class FileDifferTest extends TestCase
 {
-    private array $diff, $firstArray, $secondArray;
+    private array $diff, $firstArray, $secondArray, $recursiveDiff;
+
+    const FIXTURES_DIRECTORY_PATH = __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR;
     public function setUp(): void
     {
         $this->diff = array(
@@ -20,6 +22,10 @@ final class FileDifferTest extends TestCase
             ' + timeout' => 20,
             ' + verbose' => true,
         );
+        $this->recursiveDiff = json_decode(file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file3_file4_recursive_result.json'), true);
+    }
+    public function testCorrectDiff(): void
+    {
 
         $this->firstArray = [
             "host" => "hexlet.io",
@@ -34,11 +40,19 @@ final class FileDifferTest extends TestCase
             "host" => "hexlet.io"
         ];
 
-    }
-    public function testCorrectDiff(): void
-    {
         $fileDiffer = new FileDiffer($this->firstArray, $this->secondArray);
 
         $this->assertEquals($this->diff, $fileDiffer->getResultDiff());
+    }
+
+    public function testRecursiveDiff(): void
+    {
+        $this->firstArray = json_decode(file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file3_recursive.json'), true);
+
+        $this->secondArray = json_decode(file_get_contents(self::FIXTURES_DIRECTORY_PATH . 'file4_recursive.json'), true);
+
+        $fileDiffer = new FileDiffer($this->firstArray, $this->secondArray);
+
+        $this->assertEquals($this->recursiveDiff, $fileDiffer->getResultDiff());
     }
 }

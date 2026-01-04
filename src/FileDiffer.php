@@ -110,7 +110,7 @@ final class FileDiffer
     {
         if (! isset($this->resultDiff)) {
             $diff = $this->makeResultDiff($this->first, $this->second);
-            return $this->buildFormattedDiff($diff);
+            $this->resultDiff = $this->buildFormattedDiff($diff);
         }
 
         return $this->resultDiff;

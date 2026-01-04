@@ -6,10 +6,10 @@ use function Hexlet\Code\genDiff;
 
 set_time_limit(1);
 
-$recursive = false;
+$recursive = true;
 
-$f1 = sprintf('tests/fixtures/file1%s.json', $recursive ? '_recursive' : '');
-$f2 = sprintf('tests/fixtures/file2%s.json', $recursive ? '_recursive' : '');
+$f1 = sprintf('tests/fixtures/file3%s.json', $recursive ? '_recursive' : '');
+$f2 = sprintf('tests/fixtures/file4%s.json', $recursive ? '_recursive' : '');
 
 
 $diff_data = genDiff($f1, $f2);
