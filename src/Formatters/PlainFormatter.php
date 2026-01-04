@@ -23,12 +23,17 @@ final class PlainFormatter implements FormatterInterface
             return 'null';
         }
 
+        if (is_string($value)) {
+            return "'{$value}'";
+        }
+
         if (!is_array($value)) {
             return (string) $value;
         }
 
         return "[complex value]";
     }
+
 
     private function buildFormattedDiff(array $diff): array
     {
@@ -93,20 +98,20 @@ final class PlainFormatter implements FormatterInterface
             case 'changed':
 
                 return [
-                    sprintf("Property %s was updated. From %s to %s", $firstKey, $this->stringify($firstValue), $this->stringify($secondValue))
+                    sprintf("Property '%s' was updated. From %s to %s", $firstKey, $this->stringify($firstValue), $this->stringify($secondValue))
                 ];
 
             case 'added':
                 return [
                     sprintf(
-                        "Property $firstKey was added with value: %s",
-                        $this->stringify($firstValue)
+                        "Property '%s' was added with value: %s",
+                        $firstKey,$this->stringify($firstValue)
                     )
                 ];
 
             case 'removed':
                 return [
-                    "Property $firstKey was removed"
+                    "Property '$firstKey' was removed"
                 ];
         }
 
