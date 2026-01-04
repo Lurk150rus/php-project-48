@@ -2,7 +2,7 @@
 
 namespace Differ\Differ;
 
-function genDiff(string $firstFilePath, string $secondFilePath, string $format = ''): array
+function genDiff(string $firstFilePath, string $secondFilePath, string $format = ''): mixed
 {
     $files = array_filter([trim($firstFilePath), trim($secondFilePath)]);
 

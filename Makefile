@@ -12,7 +12,7 @@ gendiff:
 	./bin/gendiff $(filter-out $@,$(MAKECMDGOALS))
 
 example:
-	./bin/gendiff -f plain /home/kirill/Documents/Hexlet/php-project-48/tests/fixtures/file1.json tests/fixtures/file2.json
+	./bin/gendiff -f stylish /home/kirill/Documents/Hexlet/php-project-48/tests/fixtures/file1.json tests/fixtures/file2.json
 
 lint:
 	composer exec --verbose phpcs -- src src bin
