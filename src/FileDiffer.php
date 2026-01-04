@@ -55,7 +55,7 @@ final class FileDiffer
             case 'unchanged':
                 return [[$first_key, $first_value]];
             case 'changed':
-                return [[' + ' . $first_key, $first_value], [' - ' . $first_key, $second_value]];
+                return [[' - ' . $first_key, $first_value], [' + ' . $first_key, $second_value]];
             case 'added':
                 return [[' + ' .  $first_key, $first_value]];
             case 'removed':

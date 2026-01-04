@@ -37,8 +37,8 @@ final class genDiffTest extends TestCase
             ' - follow' => false,
             'host' => 'hexlet.io',
             ' - proxy' => '123.234.53.22',
-            ' + timeout' => 50,
-            ' - timeout' => 20,
+            ' - timeout' => 50,
+            ' + timeout' => 20,
             ' + verbose' => true,
         );
 
@@ -46,7 +46,6 @@ final class genDiffTest extends TestCase
         $filePath2 = $this->dirpath . 'file2.json';
 
         $diff_data = genDiff($filePath1, $filePath2);
-
         $this->assertEquals($diff_data, $correctDiff);
     }
 
@@ -60,8 +59,8 @@ final class genDiffTest extends TestCase
             ' - follow' => false,
             'host' => 'hexlet.io',
             ' - proxy' => '123.234.53.22',
-            ' + timeout' => 50,
-            ' - timeout' => 20,
+            ' - timeout' => 50,
+            ' + timeout' => 20,
             ' + verbose' => true,
         );
 
