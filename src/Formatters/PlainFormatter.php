@@ -96,16 +96,20 @@ final class PlainFormatter implements FormatterInterface
                 return [];
 
             case 'changed':
-
                 return [
-                    sprintf("Property '%s' was updated. From %s to %s", $firstKey, $this->stringify($firstValue), $this->stringify($secondValue))
+                    sprintf(
+                        "Property '%s' was updated. From %s to %s",
+                        $firstKey,
+                        $this->stringify($firstValue),
+                        $this->stringify($secondValue)
+                    )
                 ];
-
             case 'added':
                 return [
                     sprintf(
                         "Property '%s' was added with value: %s",
-                        $firstKey,$this->stringify($firstValue)
+                        $firstKey,
+                        $this->stringify($firstValue)
                     )
                 ];
 
