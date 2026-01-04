@@ -10,14 +10,14 @@ final class StylishFormatter implements FormatterInterface
 {
     private function stringify(mixed $value, int $depth): string
     {
-        if($value === '') return '';
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        if ($value === '') return '';
 
         if (is_null($value)) {
             return 'null';
-        }
-
-        if (is_bool($value)) {
-            return $value ? 'true' : 'false';
         }
 
         if (!is_array($value)) {
@@ -75,7 +75,7 @@ final class StylishFormatter implements FormatterInterface
                     break;
 
                 case 'added':
-                    $val = $this->stringify($node['value_new'] ?? null, $depth);
+                    $val = $this->stringify($node['value_old'] ?? null, $depth);
                     $lines[] = $markerIndent . "+ " . "{$key}: " . $val;
                     break;
 
