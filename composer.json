@@ -1,15 +1,18 @@
 {
     "name": "hexlet/code",
     "description": "Учебный проект \"Вычислитель отношений\" от Hexlet",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
+    "bin": [
+            "bin/gendiff"
+        ],
     "autoload": {
         "psr-4": {
             "Hexlet\\Code\\": "src/"
         },
         "files": [
             "src/genDiff.php"
-        ]
+        ]          
     },
     "autoload-dev": {
         "psr-4": {
