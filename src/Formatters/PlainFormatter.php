@@ -9,6 +9,27 @@ use Throwable;
 
 final class PlainFormatter implements FormatterInterface
 {
+    private function stringify(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        if ($value === '') {
+            return '';
+        }
+
+        if (is_null($value)) {
+            return 'null';
+        }
+
+        if (!is_array($value)) {
+            return (string) $value;
+        }
+
+        return "[complex value]";
+    }
+
     private function buildFormattedDiff(array $diff): array
     {
         $result = [];
@@ -70,18 +91,16 @@ final class PlainFormatter implements FormatterInterface
                 return [];
 
             case 'changed':
-                $firstValue = is_array($firstValue) ? '[complex value]' : $firstValue;
-                $secondValue = is_array($secondValue) ? '[complex value]' : $secondValue;
 
                 return [
-                    sprintf("Property '%s' was updated. From '%s' to '%s'", $firstKey, $firstValue, $secondValue)
+                    sprintf("Property '%s' was updated. From '%s' to '%s'", $firstKey, $this->stringify($firstValue), $this->stringify($secondValue))
                 ];
 
             case 'added':
                 return [
                     sprintf(
                         "Property '$firstKey' was added with value: %s",
-                        is_array($firstValue) ? '[complex value]' : $firstValue
+                        $this->stringify($firstValue)
                     )
                 ];
 
