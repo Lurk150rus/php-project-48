@@ -99,14 +99,14 @@ final class PlainFormatter implements FormatterInterface
             case 'added':
                 return [
                     sprintf(
-                        "Property '$firstKey' was added with value: %s",
+                        "Property $firstKey was added with value: %s",
                         $this->stringify($firstValue)
                     )
                 ];
 
             case 'removed':
                 return [
-                    "Property '$firstKey' was removed"
+                    "Property $firstKey was removed"
                 ];
         }
 
